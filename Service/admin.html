@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+</head>
+
+<body>
+
+    <h2>Admin Page</h2>
+
+    <label for="adminReply">Enter your reply:</label>
+    <input type="text" id="adminReply">
+    <button onclick="sendAdminReply()">Reply</button>
+
+    <div id="adminMessages"></div>
+
+    <script>
+        function sendAdminReply() {
+            var adminReply = document.getElementById('adminReply').value;
+
+            if (adminReply.trim() !== '') {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'sendReply.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        loadAdminMessages();
+                        document.getElementById('adminReply').value = '';
+                    }
+                };
+
+                xhr.send('message=' + encodeURIComponent(adminReply));
+            }
+        }
+
+        function loadAdminMessages() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'getAdminMessages.php', true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('adminMessages').innerHTML = xhr.responseText;
+                }
+            };
+
+            xhr.send();
+        }
+
+        // Load messages on page load
+        loadAdminMessages();
+
+        // Check for new messages every 5 seconds
+        setInterval(loadAdminMessages, 5000);
+    </script>
+
+</body>
+
+</html>

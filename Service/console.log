@@ -1,0 +1,19 @@
+function submitData() {
+    console.log('submitData function called');
+    // ... rest of the code
+}
+
+function loadUserTable() {
+    console.log('loadUserTable function called');
+    // ... rest of the code
+}
+
+function updatePan() {
+    console.log('updatePan function called');
+    // ... rest of the code
+}
+
+function loadAdminTable() {
+    console.log('loadAdminTable function called');
+    // ... rest of the code
+}
